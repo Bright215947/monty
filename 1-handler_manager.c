@@ -1,39 +1,15 @@
-#include "monty.h"
+#include "monty.h
 
-/**
- * _get_handler - checks for a registered handler for a given opcode
- * @opcode: the opcode to get handler for
- *
- * Return: the handler found. if no valid handler exists,
- * a default NULL-based handler is returned
- */
+#define MAX_STACK_SIZE 100
 
-instruction_t _get_handler(const char *opcode)
-{
-	int i;
-	static instruction_t handlers[] = {
-		{"push", push_handler},
-		{"pall", pall_handler},
-		{"pchar", pchr_handler},
-		{"pstr", pstr_handler},
-		{"rotl", rotl_handler},
-		{"rotr", rotr_handler},
-		{"pop", pop_handler},
-		{"add", add_handler},
-		{"nop", nop_handler},
-		{"swap", swap_handler},
-		{"sub", sub_handler},
-		{"mul", mul_handler},
-		{"pint", pint_handler},
-		{"div", div_handler},
-		{"mod", mod_handler},
-		{NULL, NULL}
-	};
+int stack[MAX_STACK_SIZE];
+int stack_top = 0;
 
-	for (i = 0; handlers[i].opcode != NULL; i++)
-	{
-		if (strcmp(opcode, handlers[i].opcode) == 0)
-		break;
-	}
-	return (handlers[i]);
+void pint() {
+    if (stack_top == 0) {
+        fprintf(stderr, "L<line_number>: can't pint, stack empty\n");
+        exit(EXIT_FAILURE);
+    }
+    printf("%d\n", stack[stack_top - 1]);
 }
+
